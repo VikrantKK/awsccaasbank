@@ -52,7 +52,13 @@ variable "lambda_function_arns" {
 }
 
 variable "lex_bot_alias_arn" {
-  description = "Lex V2 bot alias ARN for bot association"
+  description = "Lex V2 bot alias ARN for bot association (empty to skip)"
+  type        = string
+  default     = ""
+}
+
+variable "lex_bot_id" {
+  description = "Lex V2 bot ID for bot association"
   type        = string
   default     = ""
 }

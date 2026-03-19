@@ -16,8 +16,15 @@ module "security" {
   project_name             = var.project_name
   aws_region               = var.aws_region
   kms_deletion_window_days = var.kms_deletion_window_days
-  dynamodb_table_arns      = module.storage.dynamodb_table_arns
-  s3_bucket_arns           = module.storage.s3_bucket_arns
+  dynamodb_table_arns = [
+    module.storage.contact_records_table_arn,
+    module.storage.session_data_table_arn,
+  ]
+  s3_bucket_arns = [
+    module.storage.recordings_bucket_arn,
+    module.storage.transcripts_bucket_arn,
+    module.storage.exports_bucket_arn,
+  ]
   tags                     = local.common_tags
 }
 
@@ -103,11 +110,12 @@ module "connect" {
   storage_kms_key_arn    = module.security.storage_kms_key_arn
   phone_numbers          = var.phone_numbers
   lambda_function_arns = [
-    module.lambda.cti_adapter_arn,
-    module.lambda.crm_lookup_arn,
-    module.lambda.post_call_survey_arn,
+    module.lambda.cti_adapter_function_arn,
+    module.lambda.crm_lookup_function_arn,
+    module.lambda.post_call_survey_function_arn,
   ]
   lex_bot_alias_arn = module.lex.bot_alias_arn
+  lex_bot_id        = module.lex.bot_id
   tags              = local.common_tags
 }
 
@@ -137,9 +145,9 @@ module "monitoring" {
   logs_kms_key_arn     = module.security.logs_kms_key_arn
   connect_instance_id  = module.connect.instance_id
   lambda_function_names = [
-    module.lambda.cti_adapter_name,
-    module.lambda.crm_lookup_name,
-    module.lambda.post_call_survey_name,
+    module.lambda.cti_adapter_function_name,
+    module.lambda.crm_lookup_function_name,
+    module.lambda.post_call_survey_function_name,
   ]
   dynamodb_table_names = [
     module.storage.contact_records_table_name,

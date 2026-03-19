@@ -49,6 +49,25 @@ variable "routing_profiles" {
       delay    = number
     }))
   }))
+  default = {
+    default_agent = {
+      description = "Default agent routing profile"
+      queue_priorities = {
+        retail_banking = {
+          priority = 1
+          delay    = 0
+        }
+        business_banking = {
+          priority = 2
+          delay    = 0
+        }
+        fraud = {
+          priority = 1
+          delay    = 0
+        }
+      }
+    }
+  }
 }
 
 variable "quick_connects" {

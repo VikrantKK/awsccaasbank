@@ -21,9 +21,9 @@ output "recordings_bucket_arn" {
 output "lambda_function_arns" {
   description = "Map of Lambda function ARNs"
   value = {
-    cti_adapter      = module.lambda.cti_adapter_arn
-    crm_lookup       = module.lambda.crm_lookup_arn
-    post_call_survey = module.lambda.post_call_survey_arn
+    cti_adapter      = module.lambda.cti_adapter_function_arn
+    crm_lookup       = module.lambda.crm_lookup_function_arn
+    post_call_survey = module.lambda.post_call_survey_function_arn
   }
 }
 

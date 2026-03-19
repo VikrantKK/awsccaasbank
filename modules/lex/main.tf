@@ -53,30 +53,11 @@ resource "aws_lexv2models_bot_version" "current" {
 }
 
 # ---------------------------------------------------------------------------
-# Bot Alias — one alias per environment (dev / staging / prod)
+# NOTE: aws_lexv2models_bot_alias is not yet available in the hashicorp/aws
+# provider. The Connect bot association uses the bot ID + DRAFT version.
+# When the resource becomes available (or via the awscc provider), add an
+# alias resource here for production-grade version pinning.
 # ---------------------------------------------------------------------------
-resource "aws_lexv2models_bot_alias" "environment" {
-  bot_id      = aws_lexv2models_bot.self_service.id
-  name        = var.environment
-  description = "Alias for the ${var.environment} environment"
-
-  bot_version = aws_lexv2models_bot_version.current.bot_version
-
-  conversation_log_settings {
-    text_log_setting {
-      enabled = true
-
-      destination {
-        cloudwatch {
-          cloudwatch_log_group_arn = aws_cloudwatch_log_group.lex_conversation_logs.arn
-          log_prefix               = "lex/${var.project_name}/${var.environment}/"
-        }
-      }
-    }
-  }
-
-  tags = var.tags
-}
 
 # ---------------------------------------------------------------------------
 # CloudWatch Log Group for conversation logs (APRA CPS 234 — encrypted)

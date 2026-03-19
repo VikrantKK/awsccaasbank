@@ -12,7 +12,7 @@ data "aws_region" "current" {}
 
 resource "aws_vpc_endpoint" "s3" {
   vpc_id            = aws_vpc.this.id
-  service_name      = "com.amazonaws.${data.aws_region.current.name}.s3"
+  service_name      = "com.amazonaws.${data.aws_region.current.id}.s3"
   vpc_endpoint_type = "Gateway"
   route_table_ids   = aws_route_table.private[*].id
 
@@ -23,7 +23,7 @@ resource "aws_vpc_endpoint" "s3" {
 
 resource "aws_vpc_endpoint" "dynamodb" {
   vpc_id            = aws_vpc.this.id
-  service_name      = "com.amazonaws.${data.aws_region.current.name}.dynamodb"
+  service_name      = "com.amazonaws.${data.aws_region.current.id}.dynamodb"
   vpc_endpoint_type = "Gateway"
   route_table_ids   = aws_route_table.private[*].id
 
@@ -38,11 +38,11 @@ resource "aws_vpc_endpoint" "dynamodb" {
 
 locals {
   interface_endpoints = {
-    kms      = "com.amazonaws.${data.aws_region.current.name}.kms"
-    logs     = "com.amazonaws.${data.aws_region.current.name}.logs"
-    sts      = "com.amazonaws.${data.aws_region.current.name}.sts"
-    voiceid  = "com.amazonaws.${data.aws_region.current.name}.voiceid"
-    kinesis  = "com.amazonaws.${data.aws_region.current.name}.kinesis-streams"
+    kms      = "com.amazonaws.${data.aws_region.current.id}.kms"
+    logs     = "com.amazonaws.${data.aws_region.current.id}.logs"
+    sts      = "com.amazonaws.${data.aws_region.current.id}.sts"
+    voiceid  = "com.amazonaws.${data.aws_region.current.id}.voiceid"
+    kinesis  = "com.amazonaws.${data.aws_region.current.id}.kinesis-streams"
   }
 }
 

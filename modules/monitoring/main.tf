@@ -147,5 +147,4 @@ resource "aws_cloudwatch_dashboard" "ccaas" {
     )
   })
 
-  tags = var.tags
 }
