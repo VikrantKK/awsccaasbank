@@ -2,6 +2,18 @@
 
 This document records the AI-assisted engineering process used to build the Westpac CCaaS Terraform Blueprint, demonstrating an **AI-first infrastructure engineering** methodology.
 
+## Git Identity (Placeholder)
+
+> **IMPORTANT**: This repository was initialized with a placeholder git identity:
+> - **Name**: `Vikrant Rathore`
+> - **Email**: `vikrant.rathore@westpac.com.au`
+>
+> Update these before pushing to a shared remote:
+> ```bash
+> git config user.name "Your Real Name"
+> git config user.email "your.real@email.com"
+> ```
+
 ## Methodology
 
 This project was scaffolded using Claude Code (Anthropic's AI coding assistant) acting as a Senior Platform Engineer. The approach:

@@ -235,3 +235,12 @@ All resources are tagged with:
 | `ManagedBy` | `terraform` |
 
 Enforced via AWS Config `required-tags` rule in the `security_guardrails` module and `default_tags` in the AWS provider.
+
+## Git Identity (Placeholder)
+
+> **NOTE**: This repo was initialized with a placeholder git identity. Update before pushing to a shared remote:
+> ```bash
+> git config user.name "Your Real Name"
+> git config user.email "your.real@email.com"
+> ```
+> Current placeholder: `Vikrant Rathore <vikrant.rathore@westpac.com.au>`
