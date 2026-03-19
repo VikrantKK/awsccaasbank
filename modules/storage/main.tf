@@ -214,3 +214,78 @@ resource "aws_s3_bucket_policy" "exports" {
     ]
   })
 }
+
+# ------------------------------------------------------------------------------
+# Access Logs Bucket — CKV_AWS_18 S3 access logging
+# ------------------------------------------------------------------------------
+
+resource "aws_s3_bucket" "access_logs" {
+  bucket = "${var.project_name}-${var.environment}-access-logs-${data.aws_caller_identity.current.account_id}"
+  tags   = merge(var.tags, { Name = "${var.project_name}-${var.environment}-access-logs" })
+}
+
+resource "aws_s3_bucket_server_side_encryption_configuration" "access_logs" {
+  bucket = aws_s3_bucket.access_logs.id
+  rule {
+    apply_server_side_encryption_by_default {
+      sse_algorithm = "AES256"
+    }
+  }
+}
+
+resource "aws_s3_bucket_public_access_block" "access_logs" {
+  bucket                  = aws_s3_bucket.access_logs.id
+  block_public_acls       = true
+  block_public_policy     = true
+  ignore_public_acls      = true
+  restrict_public_buckets = true
+}
+
+resource "aws_s3_bucket_versioning" "access_logs" {
+  bucket = aws_s3_bucket.access_logs.id
+  versioning_configuration {
+    status = "Enabled"
+  }
+}
+
+resource "aws_s3_bucket_lifecycle_configuration" "access_logs" {
+  bucket = aws_s3_bucket.access_logs.id
+
+  rule {
+    id     = "expire-old-logs"
+    status = "Enabled"
+    expiration {
+      days = 90
+    }
+  }
+
+  rule {
+    id     = "abort-incomplete-multipart"
+    status = "Enabled"
+    abort_incomplete_multipart_upload {
+      days_after_initiation = 7
+    }
+  }
+}
+
+# ------------------------------------------------------------------------------
+# S3 Bucket Logging — enable access logging on all buckets
+# ------------------------------------------------------------------------------
+
+resource "aws_s3_bucket_logging" "recordings" {
+  bucket        = aws_s3_bucket.recordings.id
+  target_bucket = aws_s3_bucket.access_logs.id
+  target_prefix = "recordings/"
+}
+
+resource "aws_s3_bucket_logging" "transcripts" {
+  bucket        = aws_s3_bucket.transcripts.id
+  target_bucket = aws_s3_bucket.access_logs.id
+  target_prefix = "transcripts/"
+}
+
+resource "aws_s3_bucket_logging" "exports" {
+  bucket        = aws_s3_bucket.exports.id
+  target_bucket = aws_s3_bucket.access_logs.id
+  target_prefix = "exports/"
+}

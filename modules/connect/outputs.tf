@@ -11,10 +11,10 @@ output "instance_arn" {
 output "contact_flow_ids" {
   description = "Map of contact flow logical names to their IDs"
   value = {
-    inbound_main       = aws_connect_contact_flow.inbound_main.contact_flow_id
-    transfer_to_queue  = aws_connect_contact_flow.transfer_to_queue.contact_flow_id
+    inbound_main        = aws_connect_contact_flow.inbound_main.contact_flow_id
+    transfer_to_queue   = aws_connect_contact_flow.transfer_to_queue.contact_flow_id
     customer_queue_hold = aws_connect_contact_flow.customer_queue_hold.contact_flow_id
-    disconnect         = aws_connect_contact_flow.disconnect.contact_flow_id
+    disconnect          = aws_connect_contact_flow.disconnect.contact_flow_id
   }
 }
 

@@ -148,6 +148,8 @@ resource "aws_connect_instance_storage_config" "ctr_kinesis" {
     kinesis_stream_config {
       stream_arn = aws_kinesis_stream.ctr_stream.arn
     }
+    # NOTE: encryption_config is not supported for KINESIS_STREAM storage type.
+    # Encryption is enforced on the Kinesis stream itself (KMS CMK).
   }
 }
 
@@ -164,5 +166,7 @@ resource "aws_connect_instance_storage_config" "agent_events_kinesis" {
     kinesis_stream_config {
       stream_arn = aws_kinesis_stream.agent_events_stream.arn
     }
+    # NOTE: encryption_config is not supported for KINESIS_STREAM storage type.
+    # Encryption is enforced on the Kinesis stream itself (KMS CMK).
   }
 }

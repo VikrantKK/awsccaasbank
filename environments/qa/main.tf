@@ -25,7 +25,7 @@ module "security" {
     module.storage.transcripts_bucket_arn,
     module.storage.exports_bucket_arn,
   ]
-  tags                     = local.common_tags
+  tags = local.common_tags
 }
 
 # =============================================================================
@@ -50,14 +50,14 @@ module "networking" {
 module "storage" {
   source = "../../modules/storage"
 
-  environment            = var.environment
-  project_name           = var.project_name
-  storage_kms_key_arn    = module.security.storage_kms_key_arn
-  dynamodb_kms_key_arn   = module.security.dynamodb_kms_key_arn
-  dynamodb_billing_mode  = var.dynamodb_billing_mode
-  recording_glacier_days = var.recording_glacier_days
+  environment              = var.environment
+  project_name             = var.project_name
+  storage_kms_key_arn      = module.security.storage_kms_key_arn
+  dynamodb_kms_key_arn     = module.security.dynamodb_kms_key_arn
+  dynamodb_billing_mode    = var.dynamodb_billing_mode
+  recording_glacier_days   = var.recording_glacier_days
   recording_retention_days = var.recording_retention_days
-  tags                   = local.common_tags
+  tags                     = local.common_tags
 }
 
 # =============================================================================
@@ -67,19 +67,19 @@ module "storage" {
 module "lambda" {
   source = "../../modules/lambda"
 
-  environment                = var.environment
-  project_name               = var.project_name
-  subnet_ids                 = module.networking.private_subnet_ids
-  lambda_security_group_id   = module.networking.lambda_security_group_id
-  lambda_kms_key_arn         = module.security.connect_kms_key_arn
-  logs_kms_key_arn           = module.security.logs_kms_key_arn
+  environment                 = var.environment
+  project_name                = var.project_name
+  subnet_ids                  = module.networking.private_subnet_ids
+  lambda_security_group_id    = module.networking.lambda_security_group_id
+  lambda_kms_key_arn          = module.security.connect_kms_key_arn
+  logs_kms_key_arn            = module.security.logs_kms_key_arn
   dynamodb_contact_table_arn  = module.storage.contact_records_table_arn
   dynamodb_session_table_arn  = module.storage.session_data_table_arn
   dynamodb_contact_table_name = module.storage.contact_records_table_name
   dynamodb_session_table_name = module.storage.session_data_table_name
-  connect_instance_id        = module.connect.instance_id
-  reserved_concurrency       = var.lambda_reserved_concurrency
-  tags                       = local.common_tags
+  connect_instance_id         = module.connect.instance_id
+  reserved_concurrency        = var.lambda_reserved_concurrency
+  tags                        = local.common_tags
 }
 
 # =============================================================================
@@ -103,12 +103,12 @@ module "lex" {
 module "connect" {
   source = "../../modules/connect"
 
-  environment            = var.environment
-  project_name           = var.project_name
-  recordings_bucket_name = module.storage.recordings_bucket_id
+  environment             = var.environment
+  project_name            = var.project_name
+  recordings_bucket_name  = module.storage.recordings_bucket_id
   transcripts_bucket_name = module.storage.transcripts_bucket_id
-  storage_kms_key_arn    = module.security.storage_kms_key_arn
-  phone_numbers          = var.phone_numbers
+  storage_kms_key_arn     = module.security.storage_kms_key_arn
+  phone_numbers           = var.phone_numbers
   lambda_function_arns = [
     module.lambda.cti_adapter_function_arn,
     module.lambda.crm_lookup_function_arn,
@@ -126,11 +126,11 @@ module "connect" {
 module "routing" {
   source = "../../modules/routing"
 
-  environment           = var.environment
-  project_name          = var.project_name
-  connect_instance_id   = module.connect.instance_id
+  environment              = var.environment
+  project_name             = var.project_name
+  connect_instance_id      = module.connect.instance_id
   transfer_contact_flow_id = module.connect.contact_flow_ids["transfer_to_queue"]
-  tags                  = local.common_tags
+  tags                     = local.common_tags
 }
 
 # =============================================================================
@@ -140,10 +140,10 @@ module "routing" {
 module "monitoring" {
   source = "../../modules/monitoring"
 
-  environment          = var.environment
-  project_name         = var.project_name
-  logs_kms_key_arn     = module.security.logs_kms_key_arn
-  connect_instance_id  = module.connect.instance_id
+  environment         = var.environment
+  project_name        = var.project_name
+  logs_kms_key_arn    = module.security.logs_kms_key_arn
+  connect_instance_id = module.connect.instance_id
   lambda_function_names = [
     module.lambda.cti_adapter_function_name,
     module.lambda.crm_lookup_function_name,

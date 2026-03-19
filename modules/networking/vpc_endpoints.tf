@@ -38,11 +38,11 @@ resource "aws_vpc_endpoint" "dynamodb" {
 
 locals {
   interface_endpoints = {
-    kms      = "com.amazonaws.${data.aws_region.current.id}.kms"
-    logs     = "com.amazonaws.${data.aws_region.current.id}.logs"
-    sts      = "com.amazonaws.${data.aws_region.current.id}.sts"
-    voiceid  = "com.amazonaws.${data.aws_region.current.id}.voiceid"
-    kinesis  = "com.amazonaws.${data.aws_region.current.id}.kinesis-streams"
+    kms     = "com.amazonaws.${data.aws_region.current.id}.kms"
+    logs    = "com.amazonaws.${data.aws_region.current.id}.logs"
+    sts     = "com.amazonaws.${data.aws_region.current.id}.sts"
+    voiceid = "com.amazonaws.${data.aws_region.current.id}.voiceid"
+    kinesis = "com.amazonaws.${data.aws_region.current.id}.kinesis-streams"
   }
 }
 

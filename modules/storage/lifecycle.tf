@@ -18,6 +18,14 @@ resource "aws_s3_bucket_lifecycle_configuration" "recordings" {
       days = var.recording_retention_days
     }
   }
+
+  rule {
+    id     = "abort-incomplete-multipart"
+    status = "Enabled"
+    abort_incomplete_multipart_upload {
+      days_after_initiation = 7
+    }
+  }
 }
 
 # ------------------------------------------------------------------------------
@@ -40,6 +48,14 @@ resource "aws_s3_bucket_lifecycle_configuration" "transcripts" {
       days = var.recording_retention_days
     }
   }
+
+  rule {
+    id     = "abort-incomplete-multipart"
+    status = "Enabled"
+    abort_incomplete_multipart_upload {
+      days_after_initiation = 7
+    }
+  }
 }
 
 # ------------------------------------------------------------------------------
@@ -55,6 +71,14 @@ resource "aws_s3_bucket_lifecycle_configuration" "exports" {
 
     expiration {
       days = var.export_retention_days
+    }
+  }
+
+  rule {
+    id     = "abort-incomplete-multipart"
+    status = "Enabled"
+    abort_incomplete_multipart_upload {
+      days_after_initiation = 7
     }
   }
 }

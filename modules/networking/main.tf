@@ -229,3 +229,12 @@ resource "aws_flow_log" "this" {
     Name = "${var.project_name}-${var.environment}-vpc-flow-log"
   })
 }
+
+################################################################################
+# Default Security Group — CKV2_AWS_12 restrict default SG
+################################################################################
+
+resource "aws_default_security_group" "default" {
+  vpc_id = aws_vpc.this.id
+  tags   = merge(local.common_tags, { Name = "${var.project_name}-${var.environment}-default-sg-restricted" })
+}

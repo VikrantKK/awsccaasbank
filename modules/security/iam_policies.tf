@@ -44,7 +44,7 @@ data "aws_iam_policy_document" "lambda_policy" {
     resources = length(var.s3_bucket_arns) > 0 ? concat(
       var.s3_bucket_arns,
       [for arn in var.s3_bucket_arns : "${arn}/*"]
-    ) : [
+      ) : [
       "arn:${local.partition}:s3:::${local.name_prefix}-*",
       "arn:${local.partition}:s3:::${local.name_prefix}-*/*",
     ]
@@ -140,7 +140,7 @@ data "aws_iam_policy_document" "connect_policy" {
     resources = length(var.s3_bucket_arns) > 0 ? concat(
       var.s3_bucket_arns,
       [for arn in var.s3_bucket_arns : "${arn}/*"]
-    ) : [
+      ) : [
       "arn:${local.partition}:s3:::${local.name_prefix}-*",
       "arn:${local.partition}:s3:::${local.name_prefix}-*/*",
     ]

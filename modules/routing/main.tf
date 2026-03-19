@@ -33,9 +33,9 @@ resource "aws_connect_queue" "this" {
 resource "aws_connect_routing_profile" "this" {
   for_each = var.routing_profiles
 
-  instance_id            = var.connect_instance_id
-  name                   = "${var.project_name}-${var.environment}-${replace(each.key, "_", "-")}"
-  description            = each.value.description
+  instance_id               = var.connect_instance_id
+  name                      = "${var.project_name}-${var.environment}-${replace(each.key, "_", "-")}"
+  description               = each.value.description
   default_outbound_queue_id = aws_connect_queue.this[keys(each.value.queue_priorities)[0]].queue_id
 
   media_concurrencies {

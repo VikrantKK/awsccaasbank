@@ -16,7 +16,30 @@
       "Bash(terraform init:*)",
       "Bash(terraform validate:*)",
       "Bash(terraform providers:*)",
-      "Bash(tr '{' '\\\\n')"
+      "Bash(tr '{' '\\\\n')",
+      "Bash(git push:*)",
+      "Bash(terraform fmt:*)",
+      "Bash(pip install:*)",
+      "Bash(pip3 install:*)",
+      "Bash(where python3:*)",
+      "Bash(where pip:*)",
+      "Bash(where pipx:*)",
+      "Bash(ls /c/Python*)",
+      "Read(//c/Westpac/$LOCALAPPDATA/Programs/**)",
+      "Bash(/c/Users/vikrant/AppData/Local/Microsoft/WindowsApps/python3.exe -m pip install checkov)",
+      "Bash(where docker:*)",
+      "Bash(docker --version)",
+      "Bash(where npm:*)",
+      "Bash(npm --version)",
+      "Bash(where winget:*)",
+      "Bash(winget --version)",
+      "Bash(winget install:*)",
+      "Bash(export PATH=\"/c/Users/vikrant/AppData/Local/Programs/Python/Python312:/c/Users/vikrant/AppData/Local/Programs/Python/Python312/Scripts:$PATH\")",
+      "Bash(checkov -d . --framework terraform --compact --quiet)",
+      "Bash(export PATH=/c/Users/vikrant/AppData/Local/Programs/Python/Python312:/c/Users/vikrant/AppData/Local/Programs/Python/Python312/Scripts:$PATH)",
+      "Bash(checkov -d . --framework terraform --compact --quiet -o json)",
+      "Bash(checkov -d . --framework terraform --compact --quiet --skip-check CKV_AWS_144,CKV2_AWS_62)",
+      "Bash(checkov -d . --framework terraform --compact --quiet --skip-check CKV_AWS_144,CKV2_AWS_62,CKV_AWS_109,CKV_AWS_111,CKV_AWS_356,CKV2_AWS_5)"
     ]
   }
 }

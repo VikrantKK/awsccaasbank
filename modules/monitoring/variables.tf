@@ -49,9 +49,9 @@ variable "alert_email_endpoints" {
 }
 
 variable "log_retention_days" {
-  description = "Number of days to retain CloudWatch logs"
+  description = "Number of days to retain CloudWatch logs (minimum 365 for APRA CPS 234)"
   type        = number
-  default     = 90
+  default     = 365
 }
 
 variable "tags" {

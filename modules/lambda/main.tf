@@ -49,9 +49,9 @@ data "archive_file" "lambda" {
 resource "aws_sqs_queue" "dlq" {
   for_each = local.functions
 
-  name                       = "${var.project_name}-${each.key}-dlq-${var.environment}"
-  message_retention_seconds  = 1209600 # 14 days
-  kms_master_key_id          = var.lambda_kms_key_arn
+  name                              = "${var.project_name}-${each.key}-dlq-${var.environment}"
+  message_retention_seconds         = 1209600 # 14 days
+  kms_master_key_id                 = var.lambda_kms_key_arn
   kms_data_key_reuse_period_seconds = 300
 
   tags = merge(var.tags, {
@@ -78,6 +78,24 @@ resource "aws_cloudwatch_log_group" "lambda" {
 }
 
 # -----------------------------------------------------------------------------
+# Code Signing Configuration
+# -----------------------------------------------------------------------------
+
+resource "aws_lambda_code_signing_config" "this" {
+  for_each = local.functions
+
+  allowed_publishers {
+    signing_profile_version_arns = var.code_signing_profile_arns
+  }
+
+  policies {
+    untrusted_artifact_on_deployment = "Warn"
+  }
+
+  description = "Code signing config for ${each.key}"
+}
+
+# -----------------------------------------------------------------------------
 # Lambda Functions
 # -----------------------------------------------------------------------------
 
@@ -95,6 +113,8 @@ resource "aws_lambda_function" "this" {
   timeout          = each.value.timeout
   memory_size      = each.value.memory_size
 
+  code_signing_config_arn = length(var.code_signing_profile_arns) > 0 ? aws_lambda_code_signing_config.this[each.key].arn : null
+
   reserved_concurrent_executions = var.reserved_concurrency
 
   kms_key_arn = var.lambda_kms_key_arn
@@ -111,6 +131,10 @@ resource "aws_lambda_function" "this" {
       CONNECT_INSTANCE_ID    = var.connect_instance_id
       ENVIRONMENT            = var.environment
     }
+  }
+
+  tracing_config {
+    mode = "Active"
   }
 
   dead_letter_config {

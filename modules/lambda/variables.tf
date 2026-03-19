@@ -64,7 +64,13 @@ variable "reserved_concurrency" {
 variable "log_retention_days" {
   description = "CloudWatch Log Group retention period in days"
   type        = number
-  default     = 30
+  default     = 365
+}
+
+variable "code_signing_profile_arns" {
+  description = "List of signing profile version ARNs for Lambda code signing (empty to skip)"
+  type        = list(string)
+  default     = []
 }
 
 variable "tags" {

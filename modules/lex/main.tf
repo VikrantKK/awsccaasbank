@@ -8,7 +8,7 @@ resource "aws_lexv2models_bot" "self_service" {
   name        = "${var.project_name}-${var.environment}-self-service"
   description = "Westpac IVR self-service bot for Amazon Connect (${var.environment})"
 
-  role_arn                  = var.lex_service_role_arn
+  role_arn                    = var.lex_service_role_arn
   idle_session_ttl_in_seconds = 300
 
   data_privacy {
