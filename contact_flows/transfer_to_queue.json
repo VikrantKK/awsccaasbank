@@ -1,0 +1,62 @@
+{
+  "Version": "2019-10-30",
+  "StartAction": "set-queue-message",
+  "Actions": [
+    {
+      "Identifier": "set-queue-message",
+      "Type": "MessageParticipant",
+      "Parameters": {
+        "Text": "Please hold while we transfer you to the next available agent."
+      },
+      "Transitions": {
+        "NextAction": "transfer-to-queue",
+        "Errors": [
+          {
+            "NextAction": "transfer-to-queue",
+            "ErrorType": "NoMatchingError"
+          }
+        ]
+      }
+    },
+    {
+      "Identifier": "transfer-to-queue",
+      "Type": "TransferContactToQueue",
+      "Parameters": {},
+      "Transitions": {
+        "NextAction": "error-message",
+        "Errors": [
+          {
+            "NextAction": "error-message",
+            "ErrorType": "NoMatchingError"
+          },
+          {
+            "NextAction": "error-message",
+            "ErrorType": "QueueAtCapacity"
+          }
+        ]
+      }
+    },
+    {
+      "Identifier": "error-message",
+      "Type": "MessageParticipant",
+      "Parameters": {
+        "Text": "We are unable to transfer your call at this time. Please try again later."
+      },
+      "Transitions": {
+        "NextAction": "disconnect",
+        "Errors": [
+          {
+            "NextAction": "disconnect",
+            "ErrorType": "NoMatchingError"
+          }
+        ]
+      }
+    },
+    {
+      "Identifier": "disconnect",
+      "Type": "DisconnectParticipant",
+      "Parameters": {},
+      "Transitions": {}
+    }
+  ]
+}

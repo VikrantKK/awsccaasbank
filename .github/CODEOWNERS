@@ -1,0 +1,7 @@
+# Westpac CCaaS Terraform Blueprint — Code Owners
+# All changes require platform engineering team review
+
+*                       @westpac/platform-engineering
+environments/prod/      @westpac/platform-engineering @westpac/security-team
+modules/security/       @westpac/platform-engineering @westpac/security-team
+.github/workflows/      @westpac/platform-engineering

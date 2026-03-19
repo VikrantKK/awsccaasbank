@@ -1,0 +1,13 @@
+environment              = "prod"
+project_name             = "westpac-ccaas"
+aws_region               = "ap-southeast-2"
+vpc_cidr                 = "10.3.0.0/16"
+nat_gateway_count        = 3
+kms_deletion_window_days = 30
+lambda_reserved_concurrency = 100
+dynamodb_billing_mode    = "PROVISIONED"
+recording_retention_days = 2555
+recording_glacier_days   = 90
+alarm_actions_enabled    = true
+alert_email_endpoints    = []
+enable_connect_contact_lens = true

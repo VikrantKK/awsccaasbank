@@ -1,0 +1,39 @@
+# Terraform
+*.tfstate
+*.tfstate.*
+*.tfplan
+.terraform/
+.terraform.lock.hcl
+crash.log
+crash.*.log
+override.tf
+override.tf.json
+*_override.tf
+*_override.tf.json
+
+# Sensitive variable files
+*.auto.tfvars
+*.auto.tfvars.json
+secret.tfvars
+
+# Environment files
+.env
+.envrc
+
+# IDE
+.idea/
+.vscode/
+*.swp
+*.swo
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Lambda build artifacts
+modules/lambda/src/**/package/
+modules/lambda/src/**/*.zip
+
+# tfsec/trivy cache
+.tfsec/
+.trivy/

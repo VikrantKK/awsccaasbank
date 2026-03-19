@@ -1,0 +1,28 @@
+{
+  "Version": "2019-10-30",
+  "StartAction": "goodbye-message",
+  "Actions": [
+    {
+      "Identifier": "goodbye-message",
+      "Type": "MessageParticipant",
+      "Parameters": {
+        "Text": "Thank you for calling Westpac. Goodbye."
+      },
+      "Transitions": {
+        "NextAction": "disconnect",
+        "Errors": [
+          {
+            "NextAction": "disconnect",
+            "ErrorType": "NoMatchingError"
+          }
+        ]
+      }
+    },
+    {
+      "Identifier": "disconnect",
+      "Type": "DisconnectParticipant",
+      "Parameters": {},
+      "Transitions": {}
+    }
+  ]
+}

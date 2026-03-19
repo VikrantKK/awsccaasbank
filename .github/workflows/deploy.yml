@@ -1,0 +1,252 @@
+name: Terraform Deploy
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'modules/**'
+      - 'environments/**'
+      - 'contact_flows/**'
+  pull_request:
+    branches: [main]
+    paths:
+      - 'modules/**'
+      - 'environments/**'
+      - 'contact_flows/**'
+
+permissions:
+  id-token: write
+  contents: read
+  pull-requests: write
+
+env:
+  TF_VERSION: "1.7.0"
+  AWS_REGION: "ap-southeast-2"
+
+jobs:
+  # =========================================================================
+  # Stage 1: Lint & Security Scan (runs on every PR and push)
+  # =========================================================================
+  lint-and-scan:
+    name: Lint & Security Scan
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: hashicorp/setup-terraform@v3
+        with:
+          terraform_version: ${{ env.TF_VERSION }}
+
+      - name: Terraform Format Check
+        run: terraform fmt -check -recursive
+
+      - name: Setup TFLint
+        uses: terraform-linters/setup-tflint@v4
+
+      - name: Run TFLint
+        run: |
+          tflint --init
+          tflint --recursive
+
+      - name: Run Checkov
+        uses: bridgecrewio/checkov-action@v12
+        with:
+          directory: .
+          framework: terraform
+          output_format: cli,sarif
+          output_file_path: console,checkov-results.sarif
+          soft_fail: false
+          skip_check: CKV_AWS_144,CKV_AWS_145
+          quiet: true
+
+  # =========================================================================
+  # Stage 2: Plan (per environment, on PR only)
+  # =========================================================================
+  plan:
+    name: Plan (${{ matrix.environment }})
+    needs: lint-and-scan
+    if: github.event_name == 'pull_request'
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        environment: [dev, test, qa, staging, prod]
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: hashicorp/setup-terraform@v3
+        with:
+          terraform_version: ${{ env.TF_VERSION }}
+
+      - name: Configure AWS Credentials (OIDC)
+        uses: aws-actions/configure-aws-credentials@v4
+        with:
+          role-to-assume: ${{ secrets[format('AWS_ROLE_ARN_{0}', matrix.environment)] }}
+          aws-region: ${{ env.AWS_REGION }}
+          role-session-name: westpac-ccaas-plan-${{ matrix.environment }}
+
+      - name: Terraform Init
+        working-directory: environments/${{ matrix.environment }}
+        run: terraform init -backend-config=../../backends/${{ matrix.environment }}.s3.tfbackend
+
+      - name: Terraform Validate
+        working-directory: environments/${{ matrix.environment }}
+        run: terraform validate
+
+      - name: Terraform Plan
+        working-directory: environments/${{ matrix.environment }}
+        run: terraform plan -out=tfplan -no-color 2>&1 | tee plan_output.txt
+
+      - name: Comment Plan on PR
+        if: github.event_name == 'pull_request'
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const fs = require('fs');
+            const plan = fs.readFileSync('environments/${{ matrix.environment }}/plan_output.txt', 'utf8');
+            const truncated = plan.length > 60000 ? plan.substring(0, 60000) + '\n... (truncated)' : plan;
+            await github.rest.issues.createComment({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              issue_number: context.issue.number,
+              body: `### Terraform Plan — \`${{ matrix.environment }}\`\n<details><summary>Show plan</summary>\n\n\`\`\`\n${truncated}\n\`\`\`\n</details>`
+            });
+
+  # =========================================================================
+  # Stage 3: Apply — Non-prod (auto on merge to main)
+  # =========================================================================
+  deploy-dev:
+    name: Deploy dev
+    needs: lint-and-scan
+    if: github.event_name == 'push' && github.ref == 'refs/heads/main'
+    runs-on: ubuntu-latest
+    environment: dev
+    steps:
+      - uses: actions/checkout@v4
+      - uses: hashicorp/setup-terraform@v3
+        with:
+          terraform_version: ${{ env.TF_VERSION }}
+      - name: Configure AWS Credentials (OIDC)
+        uses: aws-actions/configure-aws-credentials@v4
+        with:
+          role-to-assume: ${{ secrets.AWS_ROLE_ARN_DEV }}
+          aws-region: ${{ env.AWS_REGION }}
+      - name: Terraform Init & Apply
+        working-directory: environments/dev
+        run: |
+          terraform init -backend-config=../../backends/dev.s3.tfbackend
+          terraform apply -auto-approve
+
+  deploy-test:
+    name: Deploy test
+    needs: deploy-dev
+    runs-on: ubuntu-latest
+    environment: test
+    steps:
+      - uses: actions/checkout@v4
+      - uses: hashicorp/setup-terraform@v3
+        with:
+          terraform_version: ${{ env.TF_VERSION }}
+      - name: Configure AWS Credentials (OIDC)
+        uses: aws-actions/configure-aws-credentials@v4
+        with:
+          role-to-assume: ${{ secrets.AWS_ROLE_ARN_TEST }}
+          aws-region: ${{ env.AWS_REGION }}
+      - name: Terraform Init & Apply
+        working-directory: environments/test
+        run: |
+          terraform init -backend-config=../../backends/test.s3.tfbackend
+          terraform apply -auto-approve
+
+  deploy-qa:
+    name: Deploy qa
+    needs: deploy-test
+    runs-on: ubuntu-latest
+    environment: qa
+    steps:
+      - uses: actions/checkout@v4
+      - uses: hashicorp/setup-terraform@v3
+        with:
+          terraform_version: ${{ env.TF_VERSION }}
+      - name: Configure AWS Credentials (OIDC)
+        uses: aws-actions/configure-aws-credentials@v4
+        with:
+          role-to-assume: ${{ secrets.AWS_ROLE_ARN_QA }}
+          aws-region: ${{ env.AWS_REGION }}
+      - name: Terraform Init & Apply
+        working-directory: environments/qa
+        run: |
+          terraform init -backend-config=../../backends/qa.s3.tfbackend
+          terraform apply -auto-approve
+
+  deploy-staging:
+    name: Deploy staging
+    needs: deploy-qa
+    runs-on: ubuntu-latest
+    environment: staging
+    steps:
+      - uses: actions/checkout@v4
+      - uses: hashicorp/setup-terraform@v3
+        with:
+          terraform_version: ${{ env.TF_VERSION }}
+      - name: Configure AWS Credentials (OIDC)
+        uses: aws-actions/configure-aws-credentials@v4
+        with:
+          role-to-assume: ${{ secrets.AWS_ROLE_ARN_STAGING }}
+          aws-region: ${{ env.AWS_REGION }}
+      - name: Terraform Init & Apply
+        working-directory: environments/staging
+        run: |
+          terraform init -backend-config=../../backends/staging.s3.tfbackend
+          terraform apply -auto-approve
+
+  # =========================================================================
+  # Stage 4: Apply — Prod (MANUAL APPROVAL REQUIRED)
+  # =========================================================================
+  deploy-prod:
+    name: Deploy prod (manual approval)
+    needs: deploy-staging
+    runs-on: ubuntu-latest
+    environment:
+      name: prod
+      # GitHub environment protection rules enforce manual approval
+    steps:
+      - uses: actions/checkout@v4
+      - uses: hashicorp/setup-terraform@v3
+        with:
+          terraform_version: ${{ env.TF_VERSION }}
+      - name: Configure AWS Credentials (OIDC)
+        uses: aws-actions/configure-aws-credentials@v4
+        with:
+          role-to-assume: ${{ secrets.AWS_ROLE_ARN_PROD }}
+          aws-region: ${{ env.AWS_REGION }}
+      - name: Terraform Init & Plan
+        working-directory: environments/prod
+        run: |
+          terraform init -backend-config=../../backends/prod.s3.tfbackend
+          terraform plan -out=tfplan
+      - name: Terraform Apply
+        working-directory: environments/prod
+        run: terraform apply tfplan
+
+  # =========================================================================
+  # Stage 5: Post-deploy Validation (dev only, on push)
+  # =========================================================================
+  validate:
+    name: Validate Readiness (dev)
+    needs: deploy-dev
+    runs-on: ubuntu-latest
+    environment: dev
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Configure AWS Credentials (OIDC)
+        uses: aws-actions/configure-aws-credentials@v4
+        with:
+          role-to-assume: ${{ secrets.AWS_ROLE_ARN_DEV }}
+          aws-region: ${{ env.AWS_REGION }}
+      - name: Run Readiness Validation
+        run: |
+          pip install boto3
+          python scripts/validate_readiness.py --environment dev --region ${{ env.AWS_REGION }}

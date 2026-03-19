@@ -1,0 +1,16 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(for env:*)",
+      "Bash(do cp:*)",
+      "Bash(cp /c/Westpac/environments/dev/backend.tf /c/Westpac/environments/$env/backend.tf)",
+      "Bash(cp /c/Westpac/environments/dev/providers.tf /c/Westpac/environments/$env/providers.tf)",
+      "Bash(cp /c/Westpac/environments/dev/variables.tf /c/Westpac/environments/$env/variables.tf)",
+      "Bash(do for:*)",
+      "Bash(done)",
+      "Bash(git init:*)",
+      "Bash(git add:*)",
+      "Bash(git commit:*)"
+    ]
+  }
+}

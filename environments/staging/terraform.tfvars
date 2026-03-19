@@ -1,0 +1,13 @@
+environment              = "staging"
+project_name             = "westpac-ccaas"
+aws_region               = "ap-southeast-2"
+vpc_cidr                 = "10.2.0.0/16"
+nat_gateway_count        = 1
+kms_deletion_window_days = 14
+lambda_reserved_concurrency = 20
+dynamodb_billing_mode    = "PAY_PER_REQUEST"
+recording_retention_days = 90
+recording_glacier_days   = 90
+alarm_actions_enabled    = true
+alert_email_endpoints    = []
+enable_connect_contact_lens = true

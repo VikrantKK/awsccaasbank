@@ -1,0 +1,95 @@
+{
+  "Version": "2019-10-30",
+  "StartAction": "queue-hold-loop",
+  "Actions": [
+    {
+      "Identifier": "queue-hold-loop",
+      "Type": "Loop",
+      "Parameters": {
+        "LoopCount": "10"
+      },
+      "Transitions": {
+        "NextAction": "max-wait-message",
+        "Conditions": [
+          {
+            "NextAction": "hold-message",
+            "Condition": {
+              "Operator": "Equals",
+              "Operands": ["ContinueLooping"]
+            }
+          },
+          {
+            "NextAction": "max-wait-message",
+            "Condition": {
+              "Operator": "Equals",
+              "Operands": ["DoneLooping"]
+            }
+          }
+        ],
+        "Errors": [
+          {
+            "NextAction": "max-wait-message",
+            "ErrorType": "NoMatchingError"
+          }
+        ]
+      }
+    },
+    {
+      "Identifier": "hold-message",
+      "Type": "MessageParticipant",
+      "Parameters": {
+        "Text": "Thank you for your patience. Your call is important to us and will be answered by the next available agent. You are currently in the queue."
+      },
+      "Transitions": {
+        "NextAction": "hold-wait",
+        "Errors": [
+          {
+            "NextAction": "hold-wait",
+            "ErrorType": "NoMatchingError"
+          }
+        ]
+      }
+    },
+    {
+      "Identifier": "hold-wait",
+      "Type": "Wait",
+      "Parameters": {
+        "TimeoutSeconds": "30"
+      },
+      "Transitions": {
+        "NextAction": "queue-hold-loop",
+        "TimerExpired": {
+          "NextAction": "queue-hold-loop"
+        },
+        "Errors": [
+          {
+            "NextAction": "queue-hold-loop",
+            "ErrorType": "NoMatchingError"
+          }
+        ]
+      }
+    },
+    {
+      "Identifier": "max-wait-message",
+      "Type": "MessageParticipant",
+      "Parameters": {
+        "Text": "We apologise for the extended wait. Please try calling back at a later time."
+      },
+      "Transitions": {
+        "NextAction": "disconnect",
+        "Errors": [
+          {
+            "NextAction": "disconnect",
+            "ErrorType": "NoMatchingError"
+          }
+        ]
+      }
+    },
+    {
+      "Identifier": "disconnect",
+      "Type": "DisconnectParticipant",
+      "Parameters": {},
+      "Transitions": {}
+    }
+  ]
+}

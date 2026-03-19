@@ -1,0 +1,92 @@
+{
+  "Version": "2019-10-30",
+  "StartAction": "welcome-message",
+  "Actions": [
+    {
+      "Identifier": "welcome-message",
+      "Type": "MessageParticipant",
+      "Parameters": {
+        "Text": "Welcome to Westpac. Your call is important to us."
+      },
+      "Transitions": {
+        "NextAction": "check-hours",
+        "Errors": [
+          {
+            "NextAction": "transfer-to-queue",
+            "ErrorType": "NoMatchingError"
+          }
+        ]
+      }
+    },
+    {
+      "Identifier": "check-hours",
+      "Type": "CheckHoursOfOperation",
+      "Parameters": {},
+      "Transitions": {
+        "NextAction": "transfer-to-queue",
+        "Conditions": [
+          {
+            "NextAction": "transfer-to-queue",
+            "Condition": {
+              "Operator": "Equals",
+              "Operands": ["True"]
+            }
+          },
+          {
+            "NextAction": "after-hours-message",
+            "Condition": {
+              "Operator": "Equals",
+              "Operands": ["False"]
+            }
+          }
+        ],
+        "Errors": [
+          {
+            "NextAction": "transfer-to-queue",
+            "ErrorType": "NoMatchingError"
+          }
+        ]
+      }
+    },
+    {
+      "Identifier": "after-hours-message",
+      "Type": "MessageParticipant",
+      "Parameters": {
+        "Text": "We are currently closed. Our operating hours are Monday to Friday, 8 AM to 6 PM Australian Eastern Standard Time. Please call back during business hours."
+      },
+      "Transitions": {
+        "NextAction": "disconnect",
+        "Errors": [
+          {
+            "NextAction": "disconnect",
+            "ErrorType": "NoMatchingError"
+          }
+        ]
+      }
+    },
+    {
+      "Identifier": "transfer-to-queue",
+      "Type": "TransferContactToQueue",
+      "Parameters": {},
+      "Transitions": {
+        "NextAction": "disconnect",
+        "Errors": [
+          {
+            "NextAction": "disconnect",
+            "ErrorType": "NoMatchingError"
+          },
+          {
+            "NextAction": "disconnect",
+            "ErrorType": "QueueAtCapacity"
+          }
+        ]
+      }
+    },
+    {
+      "Identifier": "disconnect",
+      "Type": "DisconnectParticipant",
+      "Parameters": {},
+      "Transitions": {}
+    }
+  ]
+}
