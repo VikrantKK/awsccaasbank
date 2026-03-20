@@ -6,7 +6,7 @@ variable "environment" {
 variable "project_name" {
   description = "Project name used for resource naming"
   type        = string
-  default     = "westpac-ccaas"
+  default     = "awsccaasbank-ccaas"
 }
 
 variable "subnet_ids" {

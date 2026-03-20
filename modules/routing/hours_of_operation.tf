@@ -1,5 +1,5 @@
 ###############################################################################
-# Hours of Operation — Westpac CCaaS (Australia/Sydney)
+# Hours of Operation — Awsccaasbank CCaaS (Australia/Sydney)
 ###############################################################################
 
 locals {

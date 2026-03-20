@@ -1,5 +1,5 @@
 ###############################################################################
-# Quick Connects — Westpac CCaaS
+# Quick Connects — Awsccaasbank CCaaS
 ###############################################################################
 
 resource "aws_connect_quick_connect" "this" {

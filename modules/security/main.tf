@@ -85,7 +85,7 @@ resource "aws_kms_key" "connect_key" {
 }
 
 resource "aws_kms_alias" "connect_key" {
-  name          = "alias/westpac-ccaas-${var.environment}-connect"
+  name          = "alias/awsccaasbank-ccaas-${var.environment}-connect"
   target_key_id = aws_kms_key.connect_key.key_id
 }
 
@@ -106,7 +106,7 @@ resource "aws_kms_key" "storage_key" {
 }
 
 resource "aws_kms_alias" "storage_key" {
-  name          = "alias/westpac-ccaas-${var.environment}-storage"
+  name          = "alias/awsccaasbank-ccaas-${var.environment}-storage"
   target_key_id = aws_kms_key.storage_key.key_id
 }
 
@@ -127,7 +127,7 @@ resource "aws_kms_key" "dynamodb_key" {
 }
 
 resource "aws_kms_alias" "dynamodb_key" {
-  name          = "alias/westpac-ccaas-${var.environment}-dynamodb"
+  name          = "alias/awsccaasbank-ccaas-${var.environment}-dynamodb"
   target_key_id = aws_kms_key.dynamodb_key.key_id
 }
 
@@ -148,6 +148,6 @@ resource "aws_kms_key" "logs_key" {
 }
 
 resource "aws_kms_alias" "logs_key" {
-  name          = "alias/westpac-ccaas-${var.environment}-logs"
+  name          = "alias/awsccaasbank-ccaas-${var.environment}-logs"
   target_key_id = aws_kms_key.logs_key.key_id
 }

@@ -3,7 +3,7 @@
 set -euo pipefail
 
 ENV="${1:?Usage: $0 <environment>}"
-PROJECT="westpac-ccaas"
+PROJECT="awsccaasbank-ccaas"
 REGION="ap-southeast-2"
 ACCOUNT_ID=$(aws sts get-caller-identity --query Account --output text)
 

@@ -1,6 +1,6 @@
-# Westpac CCaaS Terraform Blueprint
+# Awsccaasbank CCaaS Terraform Blueprint
 
-Infrastructure-as-Code for Westpac's Contact Center as a Service (CCaaS) platform, built on **AWS Amazon Connect**.
+Infrastructure-as-Code for Awsccaasbank's Contact Center as a Service (CCaaS) platform, built on **AWS Amazon Connect**.
 
 ## High-Level Design
 
@@ -187,7 +187,7 @@ terraform apply tfplan
 ```bash
 # Verify Connect instance
 aws connect list-instances --region ap-southeast-2 \
-  --query "InstanceSummaryList[?InstanceAlias=='westpac-ccaas-dev']"
+  --query "InstanceSummaryList[?InstanceAlias=='awsccaasbank-ccaas-dev']"
 
 # Run full readiness validation
 python scripts/validate_readiness.py --environment dev
@@ -227,7 +227,7 @@ All resources are tagged with:
 
 | Tag | Example |
 |-----|---------|
-| `Project` | `westpac-ccaas` |
+| `Project` | `awsccaasbank-ccaas` |
 | `Environment` | `dev` / `test` / `qa` / `staging` / `prod` |
 | `Owner` | `platform-engineering` |
 | `CostCenter` | `cc-contact-center` |
@@ -243,4 +243,4 @@ Enforced via AWS Config `required-tags` rule in the `security_guardrails` module
 > git config user.name "Your Real Name"
 > git config user.email "your.real@email.com"
 > ```
-> Current placeholder: `Vikrant Rathore <vikrant.rathore@westpac.com.au>`
+> Current placeholder: `Vikrant Rathore <vikrant.rathore@awsccaasbank.com.au>`

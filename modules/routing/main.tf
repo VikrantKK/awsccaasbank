@@ -1,5 +1,5 @@
 ###############################################################################
-# Amazon Connect Queues & Routing Profiles — Westpac CCaaS
+# Amazon Connect Queues & Routing Profiles — Awsccaasbank CCaaS
 ###############################################################################
 
 locals {

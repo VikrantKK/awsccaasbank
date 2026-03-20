@@ -11,7 +11,7 @@ variable "environment" {
 variable "project_name" {
   description = "Project name used for resource naming and tagging"
   type        = string
-  default     = "westpac-ccaas"
+  default     = "awsccaasbank-ccaas"
 }
 
 variable "vpc_cidr" {

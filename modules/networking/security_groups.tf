@@ -1,5 +1,5 @@
 ################################################################################
-# Security Groups — Westpac CCaaS Networking Module
+# Security Groups — Awsccaasbank CCaaS Networking Module
 ################################################################################
 
 # Lambda Security Group — allows all outbound for CRM API calls, no inbound

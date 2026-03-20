@@ -10,7 +10,7 @@ variable "environment" {
 variable "project_name" {
   description = "Project name used as a prefix for all resources"
   type        = string
-  default     = "westpac-ccaas"
+  default     = "awsccaasbank-ccaas"
 }
 
 variable "logs_kms_key_arn" {

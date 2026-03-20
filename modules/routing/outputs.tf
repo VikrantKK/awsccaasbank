@@ -1,5 +1,5 @@
 ###############################################################################
-# Outputs — Westpac CCaaS Routing Module
+# Outputs — Awsccaasbank CCaaS Routing Module
 ###############################################################################
 
 output "queue_ids" {

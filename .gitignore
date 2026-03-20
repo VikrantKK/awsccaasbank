@@ -37,3 +37,4 @@ modules/lambda/src/**/*.zip
 # tfsec/trivy cache
 .tfsec/
 .trivy/
+modules/lambda/build/

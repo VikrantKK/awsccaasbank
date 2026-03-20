@@ -1,12 +1,12 @@
 ################################################################################
-# Lex V2 Bot — Westpac IVR Self-Service
+# Lex V2 Bot — Awsccaasbank IVR Self-Service
 # Provides automated self-service intents for Amazon Connect contact flows.
 # Locale: en_AU | Compliance: APRA CPS 234 (encryption at rest via KMS)
 ################################################################################
 
 resource "aws_lexv2models_bot" "self_service" {
   name        = "${var.project_name}-${var.environment}-self-service"
-  description = "Westpac IVR self-service bot for Amazon Connect (${var.environment})"
+  description = "Awsccaasbank IVR self-service bot for Amazon Connect (${var.environment})"
 
   role_arn                    = var.lex_service_role_arn
   idle_session_ttl_in_seconds = 300
@@ -28,7 +28,7 @@ resource "aws_lexv2models_bot_locale" "en_au" {
 
   n_lu_intent_confidence_threshold = 0.40
 
-  description = "Australian English locale for Westpac self-service bot"
+  description = "Australian English locale for Awsccaasbank self-service bot"
 }
 
 # ---------------------------------------------------------------------------

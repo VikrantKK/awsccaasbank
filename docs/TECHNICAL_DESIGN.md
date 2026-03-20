@@ -1,4 +1,4 @@
-# Technical Design Document -- Westpac CCaaS Platform
+# Technical Design Document -- Awsccaasbank CCaaS Platform
 
 | Field             | Value                                              |
 |-------------------|----------------------------------------------------|
@@ -30,7 +30,7 @@
 
 ## 1. Executive Summary
 
-This document describes the technical design of Westpac Group's Contact Center as a Service (CCaaS) platform. The platform is built on **AWS Amazon Connect** and deployed exclusively into the **ap-southeast-2 (Sydney)** AWS region via Terraform Infrastructure-as-Code (IaC).
+This document describes the technical design of Awsccaasbank Group's Contact Center as a Service (CCaaS) platform. The platform is built on **AWS Amazon Connect** and deployed exclusively into the **ap-southeast-2 (Sydney)** AWS region via Terraform Infrastructure-as-Code (IaC).
 
 The solution provides:
 
@@ -215,7 +215,7 @@ Independent: security_guardrails
 | Terraform Resource Type             | Instance(s)                                               |
 |-------------------------------------|-----------------------------------------------------------|
 | `aws_kms_key`                       | `connect_key`, `storage_key`, `dynamodb_key`, `logs_key`  |
-| `aws_kms_alias`                     | One alias per key (`alias/westpac-ccaas-{env}-{purpose}`) |
+| `aws_kms_alias`                     | One alias per key (`alias/awsccaasbank-ccaas-{env}-{purpose}`) |
 | `aws_iam_role`                      | `connect_service_role`, `lambda_execution_role`, `lex_service_role` |
 | `aws_iam_role_policy_attachment`    | Lambda VPC access managed policy                          |
 | `data.aws_iam_policy_document`      | KMS key policy, assume role policies (connect, lambda, lex) |
@@ -570,10 +570,10 @@ All data at rest is encrypted using customer-managed KMS CMKs. AWS-managed keys 
 
 | KMS CMK            | Alias Pattern                            | Encrypts                                                           |
 |--------------------|------------------------------------------|--------------------------------------------------------------------|
-| **Connect Key**    | `alias/westpac-ccaas-{env}-connect`      | Amazon Connect instance encryption, Lambda environment variables    |
-| **Storage Key**    | `alias/westpac-ccaas-{env}-storage`      | S3 buckets (recordings, transcripts, exports), Kinesis Data Streams, Kinesis Firehose |
-| **DynamoDB Key**   | `alias/westpac-ccaas-{env}-dynamodb`     | DynamoDB tables (contact_records, session_data)                    |
-| **Logs Key**       | `alias/westpac-ccaas-{env}-logs`         | CloudWatch Log Groups (VPC Flow Logs, Lambda logs, Lex conversation logs), SNS topics, CloudTrail |
+| **Connect Key**    | `alias/awsccaasbank-ccaas-{env}-connect`      | Amazon Connect instance encryption, Lambda environment variables    |
+| **Storage Key**    | `alias/awsccaasbank-ccaas-{env}-storage`      | S3 buckets (recordings, transcripts, exports), Kinesis Data Streams, Kinesis Firehose |
+| **DynamoDB Key**   | `alias/awsccaasbank-ccaas-{env}-dynamodb`     | DynamoDB tables (contact_records, session_data)                    |
+| **Logs Key**       | `alias/awsccaasbank-ccaas-{env}-logs`         | CloudWatch Log Groups (VPC Flow Logs, Lambda logs, Lex conversation logs), SNS topics, CloudTrail |
 
 **Key Properties (all CMKs):**
 
@@ -790,7 +790,7 @@ Error records are delivered to `ctr-errors/` prefix in the same bucket.
 | Outbound calls               | Enabled                                           |
 | Region                       | ap-southeast-2 (Sydney)                           |
 
-The Connect instance uses SAML federation for agent identity management, eliminating the need for Connect-managed user credentials and integrating with Westpac's existing identity provider.
+The Connect instance uses SAML federation for agent identity management, eliminating the need for Connect-managed user credentials and integrating with Awsccaasbank's existing identity provider.
 
 ### 6.2 Contact Flows
 
@@ -1026,7 +1026,7 @@ AWS authentication uses **OIDC federation** -- no long-lived IAM access keys are
 |--------------------------|-------------------------------------------------------------|
 | OIDC Provider            | GitHub Actions (`token.actions.githubusercontent.com`)      |
 | Role per environment     | `secrets.AWS_ROLE_ARN_{ENV}` (e.g., `AWS_ROLE_ARN_DEV`)    |
-| Session name             | `westpac-ccaas-plan-{environment}`                          |
+| Session name             | `awsccaasbank-ccaas-plan-{environment}`                          |
 | Region                   | `ap-southeast-2` (hardcoded)                                |
 | Terraform version        | `1.7.0` (pinned via `TF_VERSION` env var)                   |
 
@@ -1118,16 +1118,16 @@ This script is integrated into the CI/CD pipeline and runs automatically after t
 
 | Resource Type        | Naming Pattern                                             | Example                                              |
 |----------------------|------------------------------------------------------------|------------------------------------------------------|
-| General resources    | `${project_name}-${environment}-{purpose}`                 | `westpac-ccaas-dev-recordings`                       |
-| KMS aliases          | `alias/westpac-ccaas-{env}-{purpose}`                      | `alias/westpac-ccaas-dev-connect`                    |
-| Lambda functions     | `${project_name}-{function_name}-${environment}`           | `westpac-ccaas-cti_adapter-dev`                      |
-| S3 buckets           | `${project_name}-${environment}-{purpose}-${account_id}`   | `westpac-ccaas-dev-recordings-123456789012`          |
-| IAM roles            | `${project_name}-${environment}-{service}-{purpose}-role`  | `westpac-ccaas-dev-connect-service-role`             |
-| Lambda IAM roles     | `${project_name}-{function_name}-role-${environment}`      | `westpac-ccaas-cti_adapter-role-dev`                 |
-| Connect instance     | `${project_name}-${environment}`                           | `westpac-ccaas-dev`                                  |
-| CloudWatch Log Groups| `/aws/{service}/{project_name}-{environment}-{purpose}`    | `/aws/lambda/westpac-ccaas-cti_adapter-dev`          |
-| SQS DLQs             | `${project_name}-{function_name}-dlq-${environment}`       | `westpac-ccaas-cti_adapter-dlq-dev`                  |
-| SNS topics           | `${project_name}-${environment}-ccaas-{severity}`          | `westpac-ccaas-dev-ccaas-warning`                    |
+| General resources    | `${project_name}-${environment}-{purpose}`                 | `awsccaasbank-ccaas-dev-recordings`                       |
+| KMS aliases          | `alias/awsccaasbank-ccaas-{env}-{purpose}`                      | `alias/awsccaasbank-ccaas-dev-connect`                    |
+| Lambda functions     | `${project_name}-{function_name}-${environment}`           | `awsccaasbank-ccaas-cti_adapter-dev`                      |
+| S3 buckets           | `${project_name}-${environment}-{purpose}-${account_id}`   | `awsccaasbank-ccaas-dev-recordings-123456789012`          |
+| IAM roles            | `${project_name}-${environment}-{service}-{purpose}-role`  | `awsccaasbank-ccaas-dev-connect-service-role`             |
+| Lambda IAM roles     | `${project_name}-{function_name}-role-${environment}`      | `awsccaasbank-ccaas-cti_adapter-role-dev`                 |
+| Connect instance     | `${project_name}-${environment}`                           | `awsccaasbank-ccaas-dev`                                  |
+| CloudWatch Log Groups| `/aws/{service}/{project_name}-{environment}-{purpose}`    | `/aws/lambda/awsccaasbank-ccaas-cti_adapter-dev`          |
+| SQS DLQs             | `${project_name}-{function_name}-dlq-${environment}`       | `awsccaasbank-ccaas-cti_adapter-dlq-dev`                  |
+| SNS topics           | `${project_name}-${environment}-ccaas-{severity}`          | `awsccaasbank-ccaas-dev-ccaas-warning`                    |
 
 ### 12.2 Mandatory Tags
 
@@ -1135,7 +1135,7 @@ All resources must carry the following six tags, enforced by the AWS Config `REQ
 
 | Tag Key               | Description                                | Example Value            |
 |-----------------------|--------------------------------------------|--------------------------|
-| `Project`             | Project identifier                         | `westpac-ccaas`          |
+| `Project`             | Project identifier                         | `awsccaasbank-ccaas`          |
 | `Environment`         | Deployment environment                     | `dev`                    |
 | `Owner`               | Owning team                                | `platform-engineering`   |
 | `CostCenter`          | Cost allocation code                       | `cc-contact-center`      |

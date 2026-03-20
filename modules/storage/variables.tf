@@ -6,7 +6,7 @@ variable "environment" {
 variable "project_name" {
   description = "Project name used in resource naming"
   type        = string
-  default     = "westpac-ccaas"
+  default     = "awsccaasbank-ccaas"
 }
 
 variable "storage_kms_key_arn" {

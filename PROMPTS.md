@@ -1,12 +1,12 @@
 # PROMPTS.md — AI-First Engineering Process Log
 
-This document records the AI-assisted engineering process used to build the Westpac CCaaS Terraform Blueprint, demonstrating an **AI-first infrastructure engineering** methodology.
+This document records the AI-assisted engineering process used to build the Awsccaasbank CCaaS Terraform Blueprint, demonstrating an **AI-first infrastructure engineering** methodology.
 
 ## Git Identity (Placeholder)
 
 > **IMPORTANT**: This repository was initialized with a placeholder git identity:
 > - **Name**: `Vikrant Rathore`
-> - **Email**: `vikrant.rathore@westpac.com.au`
+> - **Email**: `vikrant.rathore@awsccaasbank.com.au`
 >
 > Update these before pushing to a shared remote:
 > ```bash
@@ -30,7 +30,7 @@ This project was scaffolded using Claude Code (Anthropic's AI coding assistant) 
 **Intent**: Create the foundational modular Terraform project structure.
 
 **Key directives**:
-- Act as Senior Platform Engineer for Westpac
+- Act as Senior Platform Engineer for Awsccaasbank
 - Scaffold modular Terraform CCaaS blueprint
 - AWS Amazon Connect as CCaaS platform
 - ap-southeast-2 for APRA CPS 234 data sovereignty

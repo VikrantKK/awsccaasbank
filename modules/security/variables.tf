@@ -11,7 +11,7 @@ variable "environment" {
 variable "project_name" {
   description = "Project name used in resource naming"
   type        = string
-  default     = "westpac-ccaas"
+  default     = "awsccaasbank-ccaas"
 }
 
 variable "aws_region" {

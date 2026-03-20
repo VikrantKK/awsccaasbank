@@ -1,5 +1,5 @@
 ################################################################################
-# Westpac CCaaS — Networking Module
+# Awsccaasbank CCaaS — Networking Module
 # Provides VPC infrastructure for Lambda functions in ap-southeast-2.
 # Compliant with APRA CPS 234 requirements (flow logs, encryption, no public
 # exposure of workloads).

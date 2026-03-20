@@ -1,4 +1,4 @@
-# Operations Runbook — Westpac CCaaS Platform
+# Operations Runbook — Awsccaasbank CCaaS Platform
 
 ## 1. Prerequisites
 - Terraform >= 1.7.0
@@ -11,8 +11,8 @@
 
 ### 2.1 Clone Repository
 ```bash
-git clone https://github.com/VikrantKK/westpac-ccaas-blueprint.git
-cd westpac-ccaas-blueprint
+git clone https://github.com/VikrantKK/awsccaasbank-ccaas-blueprint.git
+cd awsccaasbank-ccaas-blueprint
 ```
 
 ### 2.2 Install Pre-commit Hooks
@@ -53,7 +53,7 @@ terraform apply tfplan
 ```bash
 # Check Connect instance
 aws connect list-instances --region ap-southeast-2 \
-  --query "InstanceSummaryList[?InstanceAlias=='westpac-ccaas-<env>']"
+  --query "InstanceSummaryList[?InstanceAlias=='awsccaasbank-ccaas-<env>']"
 
 # Full readiness validation
 pip install -r scripts/requirements.txt
@@ -105,8 +105,8 @@ phone_numbers = {
 ```bash
 # Check who holds the lock
 aws dynamodb get-item \
-  --table-name westpac-ccaas-terraform-locks-<env> \
-  --key '{"LockID":{"S":"westpac-ccaas-terraform-state-<env>/ccaas/<env>/terraform.tfstate"}}' \
+  --table-name awsccaasbank-ccaas-terraform-locks-<env> \
+  --key '{"LockID":{"S":"awsccaasbank-ccaas-terraform-state-<env>/ccaas/<env>/terraform.tfstate"}}' \
   --region ap-southeast-2
 ```
 
@@ -117,7 +117,7 @@ aws dynamodb get-item \
 
 ### 5.3 Connect Instance Not Found in Validation
 - Ensure Connect instance has been created (check Terraform output)
-- Verify instance alias matches pattern: `westpac-ccaas-<env>`
+- Verify instance alias matches pattern: `awsccaasbank-ccaas-<env>`
 
 ## 6. Disaster Recovery
 

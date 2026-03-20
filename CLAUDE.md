@@ -4,7 +4,7 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## Project Overview
 
-Westpac CCaaS (Contact Center as a Service) Terraform blueprint deploying AWS Amazon Connect infrastructure. Australian bank — all resources must stay in **ap-southeast-2** for APRA CPS 234 compliance.
+Awsccaasbank CCaaS (Contact Center as a Service) Terraform blueprint deploying AWS Amazon Connect infrastructure. Australian bank — all resources must stay in **ap-southeast-2** for APRA CPS 234 compliance.
 
 ## Build & Deploy Commands
 
@@ -64,8 +64,8 @@ Each environment (`environments/<env>/main.tf`) composes all modules. Modules pa
 
 ## Naming Conventions
 
-- Resources: `${var.project_name}-${var.environment}-<purpose>` (e.g., `westpac-ccaas-dev-recordings`)
-- KMS aliases: `alias/westpac-ccaas-{env}-{purpose}`
+- Resources: `${var.project_name}-${var.environment}-<purpose>` (e.g., `awsccaasbank-ccaas-dev-recordings`)
+- KMS aliases: `alias/awsccaasbank-ccaas-{env}-{purpose}`
 - Lambda functions: `${project_name}-${environment}-{function_name}`
 - S3 buckets: `${project_name}-${environment}-{purpose}-${account_id}`
 

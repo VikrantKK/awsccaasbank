@@ -3,9 +3,9 @@
     "allow": [
       "Bash(for env:*)",
       "Bash(do cp:*)",
-      "Bash(cp /c/Westpac/environments/dev/backend.tf /c/Westpac/environments/$env/backend.tf)",
-      "Bash(cp /c/Westpac/environments/dev/providers.tf /c/Westpac/environments/$env/providers.tf)",
-      "Bash(cp /c/Westpac/environments/dev/variables.tf /c/Westpac/environments/$env/variables.tf)",
+      "Bash(cp /c/Awsccaasbank/environments/dev/backend.tf /c/Awsccaasbank/environments/$env/backend.tf)",
+      "Bash(cp /c/Awsccaasbank/environments/dev/providers.tf /c/Awsccaasbank/environments/$env/providers.tf)",
+      "Bash(cp /c/Awsccaasbank/environments/dev/variables.tf /c/Awsccaasbank/environments/$env/variables.tf)",
       "Bash(do for:*)",
       "Bash(done)",
       "Bash(git init:*)",
@@ -25,7 +25,7 @@
       "Bash(where pip:*)",
       "Bash(where pipx:*)",
       "Bash(ls /c/Python*)",
-      "Read(//c/Westpac/$LOCALAPPDATA/Programs/**)",
+      "Read(//c/Awsccaasbank/$LOCALAPPDATA/Programs/**)",
       "Bash(/c/Users/vikrant/AppData/Local/Microsoft/WindowsApps/python3.exe -m pip install checkov)",
       "Bash(where docker:*)",
       "Bash(docker --version)",
@@ -39,7 +39,17 @@
       "Bash(export PATH=/c/Users/vikrant/AppData/Local/Programs/Python/Python312:/c/Users/vikrant/AppData/Local/Programs/Python/Python312/Scripts:$PATH)",
       "Bash(checkov -d . --framework terraform --compact --quiet -o json)",
       "Bash(checkov -d . --framework terraform --compact --quiet --skip-check CKV_AWS_144,CKV2_AWS_62)",
-      "Bash(checkov -d . --framework terraform --compact --quiet --skip-check CKV_AWS_144,CKV2_AWS_62,CKV_AWS_109,CKV_AWS_111,CKV_AWS_356,CKV2_AWS_5)"
+      "Bash(checkov -d . --framework terraform --compact --quiet --skip-check CKV_AWS_144,CKV2_AWS_62,CKV_AWS_109,CKV_AWS_111,CKV_AWS_356,CKV2_AWS_5)",
+      "Bash(terraform plan:*)",
+      "Bash(wc:*)",
+      "Bash(gh api:*)",
+      "Bash(echo \"exit: $?\")",
+      "Bash(gh run:*)",
+      "Bash(gh workflow:*)",
+      "Bash(grep -rl awsccaasbank --include=*.tf --include=*.md --include=*.yml --include=*.yaml --include=*.py --include=*.sh --include=*.tfvars --include=*.tfbackend --include=*.hcl --include=*.json .)",
+      "Bash(grep -rli awsccaasbank --include=*.tf --include=*.md --include=*.yml --include=*.yaml --include=*.py --include=*.sh --include=*.tfvars --include=*.tfbackend --include=*.hcl --include=*.json .)",
+      "Bash(grep -roh \"awsccaasbank\\\\|Awsccaasbank\\\\|AWSCCAASBANK\" --include=*.tf --include=*.md --include=*.yml --include=*.yaml --include=*.py --include=*.sh --include=*.tfvars --include=*.tfbackend --include=*.json .)",
+      "Bash(find:*)"
     ]
   }
 }

@@ -6,7 +6,7 @@
       "Identifier": "welcome-message",
       "Type": "MessageParticipant",
       "Parameters": {
-        "Text": "Welcome to Westpac. Your call is important to us."
+        "Text": "Welcome to Awsccaasbank. Your call is important to us."
       },
       "Transitions": {
         "NextAction": "check-hours",

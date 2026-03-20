@@ -1,5 +1,5 @@
 ################################################################################
-# Outputs — Westpac CCaaS Networking Module
+# Outputs — Awsccaasbank CCaaS Networking Module
 ################################################################################
 
 output "vpc_id" {

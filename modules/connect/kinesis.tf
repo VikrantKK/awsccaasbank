@@ -1,6 +1,6 @@
 ###############################################################################
 # Kinesis Data Streams & Firehose — Real-Time Analytics
-# CTR and Agent Events streaming for Westpac CCaaS
+# CTR and Agent Events streaming for Awsccaasbank CCaaS
 ###############################################################################
 
 # ---------------------------------------------------------------------------

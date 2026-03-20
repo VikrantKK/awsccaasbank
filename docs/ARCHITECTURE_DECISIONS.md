@@ -1,6 +1,6 @@
-# Architecture Decision Records — Westpac CCaaS Blueprint
+# Architecture Decision Records — Awsccaasbank CCaaS Blueprint
 
-This document captures the key architectural decisions made for the Westpac Contact Centre as a Service (CCaaS) Terraform Blueprint. Each decision is recorded using the ADR (Architecture Decision Record) format to provide traceability, rationale, and consequence analysis for reviewers, auditors, and future maintainers.
+This document captures the key architectural decisions made for the Awsccaasbank Contact Centre as a Service (CCaaS) Terraform Blueprint. Each decision is recorded using the ADR (Architecture Decision Record) format to provide traceability, rationale, and consequence analysis for reviewers, auditors, and future maintainers.
 
 ---
 
@@ -63,11 +63,11 @@ This document captures the key architectural decisions made for the Westpac Cont
 **Status:** Accepted
 **Date:** 2025-01-15
 
-**Context:** Amazon Connect supports three identity management modes: `CONNECT_MANAGED`, `SAML`, and `EXISTING_DIRECTORY`. Westpac has established enterprise identity infrastructure with MFA enforcement.
+**Context:** Amazon Connect supports three identity management modes: `CONNECT_MANAGED`, `SAML`, and `EXISTING_DIRECTORY`. Awsccaasbank has established enterprise identity infrastructure with MFA enforcement.
 
 **Decision:** Use SAML federation.
 
-**Rationale:** Westpac has existing corporate identity infrastructure. SAML integrates with the bank's IdP (e.g., Azure AD/Okta), enforces MFA, and avoids managing agent credentials within Connect. This provides single sign-on for agents, centralised provisioning/deprovisioning, and consistent authentication policies across the enterprise.
+**Rationale:** Awsccaasbank has existing corporate identity infrastructure. SAML integrates with the bank's IdP (e.g., Azure AD/Okta), enforces MFA, and avoids managing agent credentials within Connect. This provides single sign-on for agents, centralised provisioning/deprovisioning, and consistent authentication policies across the enterprise.
 
 **Consequences:**
 - Requires IdP configuration outside Terraform, but aligns with enterprise SSO strategy.

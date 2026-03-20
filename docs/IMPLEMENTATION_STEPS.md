@@ -1,10 +1,10 @@
-# Implementation Steps — Westpac CCaaS Blueprint
+# Implementation Steps — Awsccaasbank CCaaS Blueprint
 
 ## Overview
 
-This document records every engineering step taken to scaffold, validate, and harden the Westpac CCaaS Terraform Blueprint. The project follows an **AI-first infrastructure engineering** methodology, using Claude Code (Anthropic's Claude Opus 4.6) acting as a Senior Platform Engineer. All resources target **ap-southeast-2** (Sydney) for APRA CPS 234 data sovereignty compliance.
+This document records every engineering step taken to scaffold, validate, and harden the Awsccaasbank CCaaS Terraform Blueprint. The project follows an **AI-first infrastructure engineering** methodology, using Claude Code (Anthropic's Claude Opus 4.6) acting as a Senior Platform Engineer. All resources target **ap-southeast-2** (Sydney) for APRA CPS 234 data sovereignty compliance.
 
-**Repository**: [https://github.com/VikrantKK/westpac-ccaas-blueprint](https://github.com/VikrantKK/westpac-ccaas-blueprint)
+**Repository**: [https://github.com/VikrantKK/awsccaasbank-ccaas-blueprint](https://github.com/VikrantKK/awsccaasbank-ccaas-blueprint)
 
 ---
 
@@ -55,10 +55,10 @@ All 8 core modules were designed and implemented concurrently via parallel AI ag
 
 | Key | Purpose | Alias Pattern |
 |-----|---------|---------------|
-| `connect` | Amazon Connect encryption | `alias/westpac-ccaas-{env}-connect` |
-| `storage` | S3 bucket encryption | `alias/westpac-ccaas-{env}-storage` |
-| `dynamodb` | DynamoDB table encryption | `alias/westpac-ccaas-{env}-dynamodb` |
-| `logs` | CloudWatch Logs encryption | `alias/westpac-ccaas-{env}-logs` |
+| `connect` | Amazon Connect encryption | `alias/awsccaasbank-ccaas-{env}-connect` |
+| `storage` | S3 bucket encryption | `alias/awsccaasbank-ccaas-{env}-storage` |
+| `dynamodb` | DynamoDB table encryption | `alias/awsccaasbank-ccaas-{env}-dynamodb` |
+| `logs` | CloudWatch Logs encryption | `alias/awsccaasbank-ccaas-{env}-logs` |
 
 - All keys: automatic rotation enabled, configurable deletion window (7 days dev, 30 days prod)
 - Shared key policy: root account admin access + key administrator actions
@@ -465,9 +465,9 @@ security -> networking -> storage -> lambda -> lex -> connect -> routing -> moni
 
 | Path Pattern | Owners |
 |-------------|--------|
-| `*` (all changes) | `@westpac/platform-engineering` |
-| `environments/prod/` | `@westpac/platform-engineering` + `@westpac/security-team` |
-| `modules/security*/` | `@westpac/platform-engineering` + `@westpac/security-team` |
+| `*` (all changes) | `@awsccaasbank/platform-engineering` |
+| `environments/prod/` | `@awsccaasbank/platform-engineering` + `@awsccaasbank/security-team` |
+| `modules/security*/` | `@awsccaasbank/platform-engineering` + `@awsccaasbank/security-team` |
 
 ---
 
@@ -478,11 +478,11 @@ security -> networking -> storage -> lambda -> lex -> connect -> routing -> moni
 **Purpose**: One-time setup of Terraform remote state infrastructure per environment.
 
 **Actions**:
-- Creates S3 state bucket: `westpac-ccaas-terraform-state-{env}`
+- Creates S3 state bucket: `awsccaasbank-ccaas-terraform-state-{env}`
 - Enables bucket versioning (state history)
 - Applies KMS encryption (server-side)
 - Blocks public access (all 4 settings)
-- Creates DynamoDB lock table: `westpac-ccaas-terraform-locks-{env}`
+- Creates DynamoDB lock table: `awsccaasbank-ccaas-terraform-locks-{env}`
 - Lock table uses PAY_PER_REQUEST billing
 
 **Usage**: `./scripts/bootstrap-backend.sh <environment>`
@@ -582,20 +582,20 @@ security -> networking -> storage -> lambda -> lex -> connect -> routing -> moni
 
 **Git identity** (placeholder):
 - Name: `Vikrant Rathore`
-- Email: `vikrant.rathore@westpac.com.au`
+- Email: `vikrant.rathore@awsccaasbank.com.au`
 - Documented in both `README.md` and `PROMPTS.md` with instructions to update before sharing
 
 **Commit history** (4 commits, chronological):
 
 | # | Message | Scope |
 |---|---------|-------|
-| 1 | `feat: scaffold Westpac CCaaS blueprint on AWS Amazon Connect` | 118 files, 7593 insertions -- initial scaffold with all modules, environments, CI/CD, scripts, documentation |
+| 1 | `feat: scaffold Awsccaasbank CCaaS blueprint on AWS Amazon Connect` | 118 files, 7593 insertions -- initial scaffold with all modules, environments, CI/CD, scripts, documentation |
 | 2 | `docs: add placeholder git identity notice to README and PROMPTS` | Added git identity warning to README.md and PROMPTS.md |
 | 3 | `fix: resolve terraform validate errors across modules` | Fixed 12 validation errors (output names, unsupported resources/attributes, deprecated APIs, missing defaults) |
 | 4 | `fix: address Checkov security findings (332->337 passed)` | Remediated 26 Checkov findings; achieved 97.4% pass rate with 9 accepted/documented exceptions |
 
 **GitHub**:
-- Created private repository: `https://github.com/VikrantKK/westpac-ccaas-blueprint`
+- Created private repository: `https://github.com/VikrantKK/awsccaasbank-ccaas-blueprint`
 - All 4 commits pushed to `origin/main`
 
 ---

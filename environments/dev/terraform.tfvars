@@ -1,5 +1,5 @@
 environment                 = "dev"
-project_name                = "westpac-ccaas"
+project_name                = "awsccaasbank-ccaas"
 aws_region                  = "ap-southeast-2"
 vpc_cidr                    = "10.1.0.0/16"
 nat_gateway_count           = 1

@@ -1,5 +1,5 @@
 ###############################################################################
-# Amazon Connect Instance — Westpac CCaaS
+# Amazon Connect Instance — Awsccaasbank CCaaS
 # APRA CPS 234 — SAML identity federation, encrypted storage, ap-southeast-2
 ###############################################################################
 

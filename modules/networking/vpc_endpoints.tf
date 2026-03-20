@@ -1,5 +1,5 @@
 ################################################################################
-# VPC Endpoints — Westpac CCaaS Networking Module
+# VPC Endpoints — Awsccaasbank CCaaS Networking Module
 # Keep AWS API traffic on the AWS backbone (no internet traversal).
 # Supports APRA CPS 234 data-in-transit controls.
 ################################################################################

@@ -1,5 +1,5 @@
 ################################################################################
-# Lex V2 Intents — Westpac IVR Self-Service
+# Lex V2 Intents — Awsccaasbank IVR Self-Service
 ################################################################################
 
 # ---------------------------------------------------------------------------
@@ -129,7 +129,7 @@ resource "aws_lexv2models_intent" "branch_hours" {
       message_group {
         message {
           plain_text_message {
-            value = "Westpac branches are generally open Monday to Friday, 9:30 AM to 4:00 PM. Some branches offer extended hours. Visit westpac.com.au/locateus for your nearest branch details."
+            value = "Awsccaasbank branches are generally open Monday to Friday, 9:30 AM to 4:00 PM. Some branches offer extended hours. Visit awsccaasbank.com.au/locateus for your nearest branch details."
           }
         }
       }

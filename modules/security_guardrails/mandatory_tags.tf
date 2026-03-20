@@ -7,7 +7,7 @@ resource "aws_organizations_policy" "mandatory_tags" {
   count = var.enable_tag_policy ? 1 : 0
 
   name        = "${local.name_prefix}-mandatory-tag-policy"
-  description = "APRA CPS 234 compliant tag policy enforcing mandatory tags for Westpac CCaaS resources"
+  description = "APRA CPS 234 compliant tag policy enforcing mandatory tags for Awsccaasbank CCaaS resources"
   type        = "TAG_POLICY"
 
   content = jsonencode({

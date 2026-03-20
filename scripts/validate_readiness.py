@@ -1,8 +1,8 @@
 #!/usr/bin/env python3
 """
-Westpac CCaaS Amazon Connect Blueprint - Readiness Validation Script
+Awsccaasbank CCaaS Amazon Connect Blueprint - Readiness Validation Script
 
-Validates that all AWS infrastructure components for the Westpac CCaaS
+Validates that all AWS infrastructure components for the Awsccaasbank CCaaS
 Amazon Connect deployment are correctly provisioned and configured.
 
 Dependencies: boto3 (see requirements.txt)
@@ -52,7 +52,7 @@ class ReadinessReport:
     def print_report(self):
         width = 80
         print("\n" + "=" * width)
-        print("  WESTPAC CCaaS AMAZON CONNECT - READINESS REPORT")
+        print("  AWSCCAASBANK CCaaS AMAZON CONNECT - READINESS REPORT")
         print("=" * width)
         passed_count = sum(1 for r in self.results if r.passed)
         total = len(self.results)
@@ -80,7 +80,7 @@ class ConnectValidator:
         self.client = boto3.client("connect", region_name=region)
         self.instance_id: Optional[str] = None
         self.instance_arn: Optional[str] = None
-        self.expected_alias = f"westpac-ccaas-{env}"
+        self.expected_alias = f"awsccaasbank-ccaas-{env}"
 
     def find_instance(self, report: ReadinessReport):
         """List Connect instances and locate the one matching the alias pattern."""
@@ -223,7 +223,7 @@ class InfraValidator:
     def __init__(self, env: str, region: str):
         self.env = env
         self.region = region
-        self.project = "westpac-ccaas"
+        self.project = "awsccaasbank-ccaas"
         self.s3 = boto3.client("s3", region_name=region)
         self.dynamodb = boto3.client("dynamodb", region_name=region)
         self.kms = boto3.client("kms", region_name=region)
@@ -569,7 +569,7 @@ class IVRFlowSimulator:
 
 def parse_args(argv=None) -> argparse.Namespace:
     parser = argparse.ArgumentParser(
-        description="Westpac CCaaS Amazon Connect readiness validator",
+        description="Awsccaasbank CCaaS Amazon Connect readiness validator",
     )
     parser.add_argument(
         "--environment",

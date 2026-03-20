@@ -6,7 +6,7 @@
       "Identifier": "goodbye-message",
       "Type": "MessageParticipant",
       "Parameters": {
-        "Text": "Thank you for calling Westpac. Goodbye."
+        "Text": "Thank you for calling Awsccaasbank. Goodbye."
       },
       "Transitions": {
         "NextAction": "disconnect",

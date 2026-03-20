@@ -1,5 +1,5 @@
-bucket         = "westpac-ccaas-terraform-state-qa"
+bucket         = "awsccaasbank-ccaas-terraform-state-qa"
 key            = "ccaas/qa/terraform.tfstate"
 region         = "ap-southeast-2"
-dynamodb_table = "westpac-ccaas-terraform-locks-qa"
+dynamodb_table = "awsccaasbank-ccaas-terraform-locks-qa"
 encrypt        = true
