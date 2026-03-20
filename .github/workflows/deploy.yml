@@ -7,12 +7,15 @@ on:
       - 'modules/**'
       - 'environments/**'
       - 'contact_flows/**'
+      - '.github/workflows/deploy.yml'
   pull_request:
     branches: [main]
     paths:
       - 'modules/**'
       - 'environments/**'
       - 'contact_flows/**'
+      - '.github/workflows/deploy.yml'
+  workflow_dispatch:
 
 permissions:
   id-token: write
