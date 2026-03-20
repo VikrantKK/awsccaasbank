@@ -10,4 +10,3 @@ recording_retention_days    = 90
 recording_glacier_days      = 90
 alarm_actions_enabled       = true
 alert_email_endpoints       = []
-enable_connect_contact_lens = true

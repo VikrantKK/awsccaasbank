@@ -57,11 +57,6 @@ variable "lex_bot_alias_arn" {
   default     = ""
 }
 
-variable "lex_bot_id" {
-  description = "Lex V2 bot ID for bot association"
-  type        = string
-  default     = ""
-}
 
 variable "kinesis_shard_count" {
   description = "Number of shards for Kinesis Data Streams (used when kinesis_on_demand is false)"

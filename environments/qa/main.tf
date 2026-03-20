@@ -115,7 +115,6 @@ module "connect" {
     module.lambda.post_call_survey_function_arn,
   ]
   lex_bot_alias_arn = module.lex.bot_alias_arn
-  lex_bot_id        = module.lex.bot_id
   tags              = local.common_tags
 }
 
@@ -126,11 +125,10 @@ module "connect" {
 module "routing" {
   source = "../../modules/routing"
 
-  environment              = var.environment
-  project_name             = var.project_name
-  connect_instance_id      = module.connect.instance_id
-  transfer_contact_flow_id = module.connect.contact_flow_ids["transfer_to_queue"]
-  tags                     = local.common_tags
+  environment         = var.environment
+  project_name        = var.project_name
+  connect_instance_id = module.connect.instance_id
+  tags                = local.common_tags
 }
 
 # =============================================================================

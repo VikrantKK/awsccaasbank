@@ -51,7 +51,11 @@
       "Bash(grep -roh \"awsccaasbank\\\\|Awsccaasbank\\\\|AWSCCAASBANK\" --include=*.tf --include=*.md --include=*.yml --include=*.yaml --include=*.py --include=*.sh --include=*.tfvars --include=*.tfbackend --include=*.json .)",
       "Bash(find:*)",
       "Bash(git reset:*)",
-      "Bash(git remote:*)"
+      "Bash(git remote:*)",
+      "Bash(do echo:*)",
+      "Read(//c/Westpac/environments/**)",
+      "Bash(rm -rf .terraform .terraform.lock.hcl)",
+      "Bash(do sed:*)"
     ]
   }
 }

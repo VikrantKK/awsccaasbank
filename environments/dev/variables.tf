@@ -82,10 +82,3 @@ variable "alert_email_endpoints" {
   type        = list(string)
   default     = []
 }
-
-# Lex
-variable "enable_connect_contact_lens" {
-  description = "Enable Amazon Connect Contact Lens for analytics"
-  type        = bool
-  default     = false
-}

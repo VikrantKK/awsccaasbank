@@ -79,12 +79,6 @@ variable "quick_connects" {
   default = {}
 }
 
-variable "transfer_contact_flow_id" {
-  description = "Contact flow ID used for queue transfers"
-  type        = string
-  default     = ""
-}
-
 variable "tags" {
   description = "Tags to apply to all resources"
   type        = map(string)
