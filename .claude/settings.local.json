@@ -49,7 +49,9 @@
       "Bash(grep -rl awsccaasbank --include=*.tf --include=*.md --include=*.yml --include=*.yaml --include=*.py --include=*.sh --include=*.tfvars --include=*.tfbackend --include=*.hcl --include=*.json .)",
       "Bash(grep -rli awsccaasbank --include=*.tf --include=*.md --include=*.yml --include=*.yaml --include=*.py --include=*.sh --include=*.tfvars --include=*.tfbackend --include=*.hcl --include=*.json .)",
       "Bash(grep -roh \"awsccaasbank\\\\|Awsccaasbank\\\\|AWSCCAASBANK\" --include=*.tf --include=*.md --include=*.yml --include=*.yaml --include=*.py --include=*.sh --include=*.tfvars --include=*.tfbackend --include=*.json .)",
-      "Bash(find:*)"
+      "Bash(find:*)",
+      "Bash(git reset:*)",
+      "Bash(git remote:*)"
     ]
   }
 }

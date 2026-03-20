@@ -11,8 +11,8 @@
 
 ### 2.1 Clone Repository
 ```bash
-git clone https://github.com/VikrantKK/awsccaasbank-ccaas-blueprint.git
-cd awsccaasbank-ccaas-blueprint
+git clone https://github.com/VikrantKK/awsccaasbank.git
+cd awsccaasbank
 ```
 
 ### 2.2 Install Pre-commit Hooks

@@ -4,7 +4,7 @@
 
 This document records every engineering step taken to scaffold, validate, and harden the Awsccaasbank CCaaS Terraform Blueprint. The project follows an **AI-first infrastructure engineering** methodology, using Claude Code (Anthropic's Claude Opus 4.6) acting as a Senior Platform Engineer. All resources target **ap-southeast-2** (Sydney) for APRA CPS 234 data sovereignty compliance.
 
-**Repository**: [https://github.com/VikrantKK/awsccaasbank-ccaas-blueprint](https://github.com/VikrantKK/awsccaasbank-ccaas-blueprint)
+**Repository**: [https://github.com/VikrantKK/awsccaasbank](https://github.com/VikrantKK/awsccaasbank)
 
 ---
 
@@ -595,7 +595,7 @@ security -> networking -> storage -> lambda -> lex -> connect -> routing -> moni
 | 4 | `fix: address Checkov security findings (332->337 passed)` | Remediated 26 Checkov findings; achieved 97.4% pass rate with 9 accepted/documented exceptions |
 
 **GitHub**:
-- Created private repository: `https://github.com/VikrantKK/awsccaasbank-ccaas-blueprint`
+- Created private repository: `https://github.com/VikrantKK/awsccaasbank`
 - All 4 commits pushed to `origin/main`
 
 ---
